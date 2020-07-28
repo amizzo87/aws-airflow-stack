@@ -20,7 +20,7 @@ AWS_ACCOUNT_ID=$(jsonvar "$EC2_DOCUMENT" accountId)
 EC2_INSTANCE_ID=$(jsonvar "$EC2_DOCUMENT" instanceId)
 export AWS_DEFAULT_REGION AWS_REGION AWS_ACCOUNT_ID EC2_INSTANCE_ID
 
-yum install -y python3 python3-pip python3-wheel python3-devel
+yum install -y python3 python3-pip python3-wheel python3-devel 
 pip3 install awscurl
 EC2_HOST_IDENTIFIER="arn:$AWS_PARTITION:ec2:$AWS_REGION:$AWS_ACCOUNT_ID"
 EC2_HOST_IDENTIFIER="$EC2_HOST_IDENTIFIER:instance/$EC2_INSTANCE_ID"
@@ -84,7 +84,7 @@ envreplace /etc/sysconfig/airflow.env
 mapfile -t AIRFLOW_ENVS < /etc/sysconfig/airflow.env
 export "${AIRFLOW_ENVS[@]}"
 
-yum install -y gcc libcurl-devel openssl-devel
+yum install -y gcc libcurl-devel openssl-devel gcc-c++
 export PYCURL_SSL_LIBRARY=openssl
 pip3 install "apache-airflow[celery,postgres,s3,crypto,password,gcp,slack]==1.10.11" "celery[sqs]" "virtualenv"
 mkdir "$AIRFLOW_HOME" && chown -R ec2-user: "$AIRFLOW_HOME" 
